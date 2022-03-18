@@ -1,0 +1,15 @@
+.col-md-3.col-form-label{
+    text-align:center;
+}
+
+
+btn btn-primary{
+    text-align:center;
+}
+
+
+@media (min-width: 200px) {
+    .container {
+      max-width: 200px;
+    }
+  }

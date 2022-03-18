@@ -1,0 +1,38 @@
+{% extends 'base3.html' %}
+{% load bootstrap4 %}
+{% block content  %}
+<form method="get" action="" name="filter_form">
+    <legend>タスク一覧</legend>
+    <div>
+        <span>プロジェクト:</span>
+        {% for project in object_list %}
+            <input type="checkbox" id="filter_project_{{ project.pk }}" 
+                name="project" 
+                value="{{ project.pk }}">{{ project.Name }}
+        {% endfor %}
+
+        <div>
+            <span>品種:</span>
+            <input type="search" id="filter_name"
+                name="name" 
+                placeholder="品種名">
+            <button id="filter">絞り込み</button>
+        </div>
+
+        {% for task in task_list %}
+        <ul>
+            <div class="alert alert-info" role="alert">
+                <p> {{ task.taskName }}</p>
+                <a href="{% url 'update' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">編集</a>
+                <a href="{% url 'delete' task.pk %}" class="btn btn-secondary " tabindex="-1" role="button" aria-disabled="true">削除</a>
+                <a href="{% url 'detail' task.pk %}" class="btn btn-success " tabindex="-1" role="button" aria-disabled="true">詳細</a>
+            </div>
+        </ul>
+        {% endfor %}
+
+        
+            
+    </div>
+
+</form>
+{% endblock content%}
