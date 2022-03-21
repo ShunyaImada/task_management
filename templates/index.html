@@ -1,20 +1,25 @@
-<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="ja">
-
 <head>
-   <meta charset="utf-8" />
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   <!--  plotly JS Files  -->
-   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-</head>
-{% extends 'base.html' %}
-{% block content %}
-   <h3>Plotlyを用いたガントチャート</h3>
-   {% autoescape off %}
-   {{ graph }}
-   <!-- HTMLコードの文字列が格納されたコンテキスト -->
-   {% endautoescape %}
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-{% endblock content %}
+
+        <!-- for admin widgets -->
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+     
+        <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+        {{ form.media }}
+        <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+        <!-- end for admin widgets -->
+ 
+    {{ form.media }}
+ 
+</head>
+<body>
+{{ form }}
+</body>
 </html>

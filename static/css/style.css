@@ -13,3 +13,44 @@ btn btn-primary{
       max-width: 200px;
     }
   }
+
+
+.box2 {
+  padding: 0.5em 1em;
+  margin: 2em 0;
+  font-weight: bold;
+  color: #413c3c;/*文字色*/
+  background: rgb(235, 230, 230);
+
+  width: 700px;
+  height: 500px;
+  position: relative;
+  bottom: 10px;
+  left: 10px;
+}
+.box2 p {
+  margin: 0; 
+  padding: 0;
+}
+
+.graph {
+  position: absolute;
+  bottom: 340px;
+  left: 790px;
+
+
+
+}
+
+
+
+#item-list ul li {
+  width: 32%;
+  float:left;
+}
+#item-list ul li:nth-child(3n-1) {
+  margin: 0 2%;
+}
+
+
+

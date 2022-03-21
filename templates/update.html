@@ -1,9 +1,30 @@
 {% extends 'base3.html' %}
+{% load bootstrap4 %}
+{% load static %}
 
-{% block content  %}
-<form action='' method ='POST'>{% csrf_token %}
-{{ form.as_p }}    
-<input type='submit' value='update'>
-</form>
 
-{% endblock content%}
+{% block header2 %}
+
+    <meta charset="UTF-8">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+    <!-- for admin widgets -->
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}"/>
+ 
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {{ form.media }}
+    <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+    <!-- end for admin widgets -->
+{% endblock header2 %}
+
+{% block content2  %}
+    <form action='' method ='POST'>
+        {% csrf_token %}
+        {% bootstrap_form form layout="horizontal" %} 
+        <div class="entry">
+            <button type="submit" class="btn btn-primary">登録</button>
+        </div>
+    </form>
+{% endblock content2%}

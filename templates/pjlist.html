@@ -1,25 +1,35 @@
 {% extends 'base3.html' %}
 {% block header %}
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-4">PJList</h1>
-      <p class="lead">This is a Project lists.</p>
-    </div>
-</div>
+
 {% endblock header%}
 
 {% block content%}
-<div class="container">
-    {% for item in object_list %}
-    <ul>
-    <div class="alert alert-info" role="alert">
-        <p>{{ item.Name }}</p>
-        <a href="{% url 'pjupdate' item.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">編集</a>
-        <a href="{% url 'pjdelete' item.pk %}" class="btn btn-secondary " tabindex="-1" role="button" aria-disabled="true">削除</a>
-        <a href="{% url 'pjdetail' item.pk %}" class="btn btn-success " tabindex="-1" role="button" aria-disabled="true">詳細</a>
-        <a href="{% url 'list' %}" class="btn btn-success " tabindex="-1" role="button" aria-disabled="true">一覧</a>
-    </div>
-    </ul>
-    {% endfor %}
+<div id="main">
+    <h2>Project List</h2>
+    <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Task</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for task in object_list %}
+
+            <tr>
+              <th scope="row"></th>
+              <td>{{ task.Name }}</td>
+              
+              <td>    
+                <a href="{% url 'pjupdate' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
+                <a href="{% url 'pjdelete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        
+    </table>
 </div>
 {% endblock content%}

@@ -1,0 +1,118 @@
+{% extends 'base3.html' %}
+{% load custom_filters %}
+{% load static %}
+
+<html>
+{% block header2 %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-2.4.2.min.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-2.4.2.min.css"rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock header2 %}
+
+{% block content  %}
+
+    <form method="get" action="" name="filter_form">
+    
+        
+        
+            
+                <h3>チェックボックスにチェックを入れたタスク一覧を表示</h3>
+            <div class="box2">
+                <h4>Project List:</h4>
+                <div class="form-check">
+                    {% for project in project_list %}
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="filter_kind_{{ project.pk }}" 
+                                    name="project" 
+                                    value="{{ project.pk }}"
+                                    {{ project.pk|checked:request.GET }}
+                                >
+                                <label class="form-check-label" for="exampleRadios1">
+                                    {{ project.Name }}
+                                </label>
+                            </li>
+                        </ul>
+
+                    {% endfor %}
+                </div>
+       
+
+        <div class="col-md-3">
+            <label for="sort1">Project Sort</label>
+            <select name="sort1" class="custom-select">
+                <option value="project">昇順</option>
+                <option value="-project">降順</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="sort2">Deadline Sort</label>
+            <select name="sort2" class="custom-select">
+                <option value="deadline">昇順</option>
+                <option value="-deadline">降順</option>
+            </select>
+        </div>
+
+        <div>
+            <button id="filter" class="btn btn-primary">submit</button>
+        </div>
+        
+    </div>
+        <div class = 'graph'>
+            {{div| safe}}
+        </div>
+    </form>
+
+
+
+
+
+    <div class='main' id="main">
+        <h2>Task List</h2>
+        <table class="table table-striped" width="20">
+            <thead class="table-dark">
+              <tr>
+                <th style="width: 20px" scope="col">Project</th>
+                <th style="width: 20px" scope="col">Task</th>
+                <th style="width: 20px" scope="col">Priority</th>
+                <th style="width: 20px" scope="col">Deadline</th>
+                <th style="width: 20px" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for task in object_list %}
+
+                <tr>
+                  <td>{{ task.project }}</td>
+                  <td>{{ task.taskName }}</td>
+                  <td>{{ task.priority }}</td>
+                  <td>{{ task.deadline | date:"o/m/d"}}</td>
+                  
+                  <td>    
+                    <a href="{% url 'update' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
+                    <a href="{% url 'delete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+            
+        </table>
+
+    </div>
+
+
+
+
+
+
+{% endblock content %}
+
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.4.2.min.js"></script>
+{{script| safe}}
+
+<html>

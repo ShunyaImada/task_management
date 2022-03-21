@@ -1,10 +1,19 @@
 {% extends 'base3.html' %}
+{% load bootstrap4 %}
+{% load static %}
 
-{% block content  %}
+
+{% block header2 %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock header2 %}
+
+{% block content2  %}
 <form action='' method ='POST'>
     {% csrf_token %}
-{{ form.as_p }}    
-<input type='submit' value='update'>
+    {% bootstrap_form form layout="horizontal" %} 
+    <div class="entry">
+        <button type="submit" class="btn btn-primary">登録</button>
+    </div>
 </form>
+{% endblock content2%}
 
-{% endblock content%}
