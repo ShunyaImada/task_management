@@ -1,4 +1,4 @@
-{% extends 'base3.html' %}
+{% extends "gantapp/base3.html" %}
 {% block header %}
 
 {% endblock header%}
@@ -11,7 +11,6 @@
           <tr>
             <th scope="col"></th>
             <th scope="col">Project Name</th>
-            <th scope="col">Task</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -23,8 +22,8 @@
               <td>{{ task.Name }}</td>
               
               <td>    
-                <a href="{% url 'pjupdate' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
-                <a href="{% url 'pjdelete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
+                <a href="{% url 'gantapp:pjupdate' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
+                <a href="{% url 'gantapp:pjdelete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
             </tr>
             {% endfor %}
           </tbody>

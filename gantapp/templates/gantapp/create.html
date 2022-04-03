@@ -1,4 +1,4 @@
-{% extends 'base3.html' %}
+{% extends "gantapp/base3.html" %}
 {% load bootstrap4 %}
 {% load static %}
 
@@ -7,7 +7,7 @@
 {% block header2 %}
 
     <meta charset="UTF-8">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet">-->
 
     
     <!-- for admin widgets -->
@@ -24,6 +24,7 @@
 
 {% block content2  %}
     <h3>Taskを新規作成</h3>
+    <h5>日付入力は「yyyy-mm-dd」でお願いします</h5>
     <form action='' method ='POST'>
         {% csrf_token %}
         {% bootstrap_form form layout="horizontal" %} 

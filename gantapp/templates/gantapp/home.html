@@ -1,4 +1,4 @@
-{% extends 'base3.html' %}
+{% extends 'gantapp/base3.html' %}
 {% load custom_filters %}
 {% load static %}
 
@@ -11,19 +11,14 @@
 {% endblock header2 %}
 
 {% block content  %}
-
+<h2>Task Management</h2>
     <form method="get" action="" name="filter_form">
-    
-        
-        
-            
-                <h3>チェックボックスにチェックを入れたタスク一覧を表示</h3>
-            <div class="box2">
-                <h4>Project List:</h4>
+        <div class="box2">
+                <div class="box-title">Project List</div>
                 <div class="form-check">
                     {% for project in project_list %}
                         <ul>
-                            <li>
+                            
                                 <input type="checkbox" id="filter_kind_{{ project.pk }}" 
                                     name="project" 
                                     value="{{ project.pk }}"
@@ -32,39 +27,48 @@
                                 <label class="form-check-label" for="exampleRadios1">
                                     {{ project.Name }}
                                 </label>
-                            </li>
+                            
                         </ul>
 
                     {% endfor %}
                 </div>
        
+                
+                <div class="sort1">
+                    <label for="sort1">Project Sort </label>
+                    <select name="sort1" class="custom-select">
+                        <option value="project">昇順</option>
+                        <option value="-project">降順</option>
+                    </select>
+                </div>
 
-        <div class="col-md-3">
-            <label for="sort1">Project Sort</label>
-            <select name="sort1" class="custom-select">
-                <option value="project">昇順</option>
-                <option value="-project">降順</option>
-            </select>
-        </div>
+                <div class="sort2">
+                    <label for="sort2">Deadline Sort</label>
+                    <select name="sort2" class="custom-select">
+                        <option value="deadline">昇順</option>
+                        <option value="-deadline">降順</option>
+                    </select>
+                </div>
 
-        <div class="col-md-3">
-            <label for="sort2">Deadline Sort</label>
-            <select name="sort2" class="custom-select">
-                <option value="deadline">昇順</option>
-                <option value="-deadline">降順</option>
-            </select>
-        </div>
-
-        <div>
-            <button id="filter" class="btn btn-primary">submit</button>
-        </div>
-        
-    </div>
-        <div class = 'graph'>
-            {{div| safe}}
+                <div>
+                    <button id="filter" class="button005">filter</button>
+                </div>
         </div>
     </form>
+    <div class = 'box_explain'>
+        <div class="box-title">How to use</div>
+        <ol>
+            <li>New PJ を選択し、新規プロジェクトを作成します</li>
+            <li>New Taskを選択、タスクを作成します</li>
+            <li>Homeに作成したタスクが表示されます</li>
+            <li>Project Listでチェックボックスに入れたタスクをフィルタリングします</li>
+        </ol>
+    </div>
 
+
+    <div class = 'graph'>
+        {{div| safe}}
+    </div>
 
 
 
@@ -91,8 +95,8 @@
                   <td>{{ task.deadline | date:"o/m/d"}}</td>
                   
                   <td>    
-                    <a href="{% url 'update' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
-                    <a href="{% url 'delete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
+                    <a href="{% url 'gantapp:update' task.pk %}" class="btn btn-primary " tabindex="-1" role="button" aria-disabled="true">Edit</a>
+                    <a href="{% url 'gantapp:delete' task.pk %}" class="btn btn-Danger " tabindex="-1" role="button" aria-disabled="true">Delete</a>
                 </tr>
                 {% endfor %}
               </tbody>

@@ -2,7 +2,7 @@ from xml.etree.ElementInclude import include
 from django.urls import path 
 from .views import Tododetail,TodoCreate,TodoDelete,TodoUpdate,PJList,PJdetail,PJCreate,PJDelete,PJUpdate,TestListView3
 
-
+app_name = 'gantapp'
 urlpatterns = [
     path('detail/<int:pk>', Tododetail.as_view(),name='detail'),
     path('create/',TodoCreate.as_view(),name='create'),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('pjdelete/<int:pk>',PJDelete.as_view(),name='pjdelete'),
     path('pjupdate/<int:pk>',PJUpdate.as_view(),name='pjupdate'),
     path('home/',TestListView3.as_view(),name = 'home'),
+    
     
     
 ]

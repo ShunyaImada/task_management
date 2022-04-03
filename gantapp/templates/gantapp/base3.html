@@ -24,21 +24,36 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'gantapp:home' %}">Home <span class="sr-only">(current)</span></a>
               </li>
 
               <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'pjcreate' %}">New PJ</a>
+                  <a class="nav-link" href="{% url 'gantapp:pjcreate' %}">New PJ</a>
               </li>
 
               <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'create' %}">New Task</a>
+                  <a class="nav-link" href="{% url 'gantapp:create' %}">New Task</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'pjlist' %}">PJ list</a>
+                <a class="nav-link" href="{% url 'gantapp:pjlist' %}">PJ list</a>
             </li>
+          </ul>
+            <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                    <li class="nav-item">
+                      <span class="navbar-text">こんにちは {{ user.username }}さん</span></li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'users:logout' %}">ログアウト</a></li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:register' %}">ユーザー登録</a></li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:login' %}">ログイン</a></li>
+              {% endif %}
               
             </ul>
+
           </div>
       </nav>
     <!--{{div| safe}}-->

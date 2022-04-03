@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget    #インポート
-from .models import Tasks
+from .models import Tasks,Projects
 
 
  
@@ -16,5 +16,14 @@ class AddTaskForm(forms.ModelForm):
             'deadline': AdminDateWidget(),
         }
         
+class AddProjectForm(forms.ModelForm):
+    """タスク追加フォーム"""
+    class Meta:
+        model = Projects
+        fields = ('Name','color',)
+    
 
+        widgets = {
+
+        }
 

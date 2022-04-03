@@ -3,7 +3,7 @@
 import contextvars
 import re
 from urllib import request
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from .models import Projects ,Tasks
 import pandas as pd
@@ -13,93 +13,115 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.models import ColumnDataSource, Range1d
 from bokeh.models.tools import HoverTool
-from .forms import AddTaskForm
+from .forms import AddTaskForm,AddProjectForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 
 # Create your views here.
 
 '''タスク'''
+@method_decorator(login_required, name='dispatch')
 class Tododetail(DetailView):
-    template_name = 'detail.html'
+    template_name = 'gantapp/detail.html'
     model = Tasks
 
+@method_decorator(login_required, name='dispatch')
 class TodoCreate(CreateView):
-    template_name = 'create.html'
+    template_name = 'gantapp/create.html'
     model = Tasks
     form_class = AddTaskForm
-    success_url = reverse_lazy('home')
-    
+    success_url = reverse_lazy('gantapp:home')
+    '''
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AddTaskForm()
         print(context['form'])
         return context
+    '''
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.owner = self.request.user
+        post.save()
+        return redirect('gantapp:home')
+    
     
     
     
 
-    
+@method_decorator(login_required, name='dispatch')  
 class TodoDelete(DeleteView):
-    template_name = 'delete.html'
+    template_name = 'gantapp/delete.html'
     model = Tasks
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('gantapp:home')
 
-
+@method_decorator(login_required, name='dispatch')
 class TodoUpdate(UpdateView):
-    template_name = 'update.html'
+    template_name = 'gantapp/update.html'
     model = Tasks
     fields = ('project','taskName','status','createdDate','deadline','priority')
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('gantapp:home')
     
-    '''
-    form_class = UpdateTaskForm
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = UpdateTaskForm#ここで定義した変数名
-        return context
-    '''
+
     
     
 '''PJ'''
+@method_decorator(login_required, name='dispatch')
 class PJList(ListView):
-    template_name = 'pjlist.html'
+    template_name = 'gantapp/pjlist.html'
     model = Projects
-    
-class PJdetail(DetailView):
-    template_name = 'pjdetail.html'
-    model = Projects
-    
-class PJCreate(CreateView):
-    template_name = 'pjcreate.html'
-    model = Projects
-    fields = ('Name','color')
-    success_url = reverse_lazy('home')
-    
+    def get_queryset(self):
+        results = self.model.objects.all()
+        results = results.model.objects.filter(owner=self.request.user)
+        return results
 
-class PJDelete(DeleteView):
-    template_name = 'pjdelete.html'
+@method_decorator(login_required, name='dispatch')
+class PJdetail(DetailView):
+    template_name = 'gantapp/pjdetail.html'
     model = Projects
-    success_url = reverse_lazy('pjlist')
+
+@method_decorator(login_required, name='dispatch')
+class PJCreate(CreateView):
+    template_name = 'gantapp/pjcreate.html'
+    model = Projects
+    form_class = AddProjectForm
+    success_url = reverse_lazy('gantapp:home')
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.owner = self.request.user
+        post.save()
+        return redirect('gantapp:home')
     
+    
+@method_decorator(login_required, name='dispatch')
+class PJDelete(DeleteView):
+    template_name = 'gantapp/pjdelete.html'
+    model = Projects
+    success_url = reverse_lazy('gantapp:pjlist')
+
+@method_decorator(login_required, name='dispatch')
 class PJUpdate(UpdateView):
-    template_name = 'pjupdate.html'
+    template_name = 'gantapp/pjupdate.html'
     model = Projects
     fields = ('Name','color')
-    success_url = reverse_lazy('pjlist')
+    success_url = reverse_lazy('gantapp:pjlist')
 
 
 '''Main'''
+@method_decorator(login_required, name='dispatch')
 class TestListView3(ListView):
     model = Tasks
-    template_name = 'home.html'
+    template_name = 'gantapp/home.html'
     
     def plotgantt(self):
         #グラフの描画
         tasks = self.get_queryset()
+        print(tasks)
         print(len(tasks))
         if len(tasks) == 0:
-            script = 'Null'
-            div = 'Null'
+            script = 'データがありません。タスクを追加してください。'
+            div = 'データがありません。タスクを追加してください。'
             return script, div
         else:
             
@@ -127,7 +149,7 @@ class TestListView3(ListView):
             df['Start_dt']=pd.to_datetime(df.Start)
             df['End_dt']=pd.to_datetime(df.End)
             
-            plot = figure(title='Project Schedule',x_axis_type='datetime',width=900,height=550,y_range=df.Task.tolist(),x_range=Range1d(df.Start_dt.min(),df.End_dt.max()), tools='save')
+            plot = figure(title='Project Schedule',x_axis_type='datetime',width=900,height=500,y_range=df.Task.tolist(),x_range=Range1d(df.Start_dt.min(),df.End_dt.max()), tools='save')
             
             plot.xaxis.major_label_text_font_size = "15pt"
             plot.yaxis.major_label_text_font_size = "15pt"
@@ -147,7 +169,7 @@ class TestListView3(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context['project_list'] = Projects.objects.all
+        context['project_list'] = Projects.objects.filter(owner=self.request.user)
         
         script, div = self.plotgantt()
         
@@ -159,6 +181,7 @@ class TestListView3(ListView):
     
     def get_queryset(self):
         results = self.model.objects.all()
+        results = results.model.objects.filter(owner=self.request.user)
         q_kinds = self.request.GET.getlist('project')
         q_name = self.request.GET.get('taskName')
         sort1 = self.request.GET.get('sort1')

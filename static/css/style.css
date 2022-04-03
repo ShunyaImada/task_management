@@ -1,10 +1,12 @@
 .col-md-3.col-form-label{
     text-align:center;
+  
 }
 
 
-btn btn-primary{
-    text-align:center;
+.btn{
+  bottom: 70px;
+  left: 400px;
 }
 
 
@@ -16,31 +18,94 @@ btn btn-primary{
 
 
 .box2 {
-  padding: 0.5em 1em;
   margin: 2em 0;
   font-weight: bold;
-  color: #413c3c;/*文字色*/
-  background: rgb(235, 230, 230);
+  color: #000000b0;/*文字色*/
+  background: rgb(255, 255, 255);
+  border: 1px solid #ccc;
 
-  width: 700px;
-  height: 500px;
+  width: 600px;
+  height: 300px;
   position: relative;
-  bottom: 10px;
-  left: 10px;
+  bottom: -150px;
+  left: 70px;
 }
+
+.box2 .box-title {
+  font-size: 1.2em;
+  background: #373837;
+  padding: 4px;
+  text-align: center;
+  color: #FFF;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+
 .box2 p {
   margin: 0; 
   padding: 0;
 }
 
+.box_explain {
+  margin: 2em 0;
+  font-weight: bold;
+  color: #000000b0;/*文字色*/
+  background: (255, 251, 251);
+  border: 1px solid #ccc;
+  width: 600px;
+  height: 150px;
+  position: relative;
+  bottom: 355px;
+  left: 70px;
+}
+
+.box_explain .box-title {
+  font-size: 1.2em;
+  background: #373837;
+  padding: 4px;
+  text-align: center;
+  color: #FFF;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 .graph {
   position: absolute;
-  bottom: 340px;
-  left: 790px;
-
-
+  bottom: 380px;
+  left: 750px;
 
 }
+
+.form-check{
+  bottom: -13px;
+  left: 20px;
+}
+
+.sort1{
+  position: absolute;
+  bottom: 180px;
+  left: 350px;
+  width: 120px;
+}
+.sort2{
+  position: absolute;
+  bottom: 85px;
+  left: 350px;
+  width: 120px;
+}
+
 
 
 
@@ -52,5 +117,24 @@ btn btn-primary{
   margin: 0 2%;
 }
 
-
+/* 005 */
+.button005  {
+  border: none;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 85px;
+  padding: 5px 30px;
+  color: #FFF;
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  background: rgb(20, 126, 226);
+  background: linear-gradient(270deg, rgb(39, 136, 228) 0%, rgb(39, 141, 243) 100%);
+  position: absolute;
+  left: 370px;
+  bottom: 20px;
+}
 
