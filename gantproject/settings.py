@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import imp
 from pathlib import Path
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -147,3 +149,7 @@ BOOTSTRAP4 = {
 }
 
 LOGIN_URL = 'users:login'
+
+
+import django_heroku
+django_heroku.settings(locals())
