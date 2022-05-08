@@ -33,18 +33,21 @@ class TodoCreate(CreateView):
     model = Tasks
     form_class = AddTaskForm
     success_url = reverse_lazy('gantapp:home')
-    '''
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = AddTaskForm()
-        print(context['form'])
-        return context
-    '''
+    
+    def get_form_kwargs(self):
+        kwargs = super(TodoCreate, self).get_form_kwargs()
+        print(kwargs)
+        kwargs['user'] = self.request.user
+        print(kwargs)
+        return kwargs
+
     def form_valid(self, form):
         post = form.save(commit=False)
         post.owner = self.request.user
         post.save()
         return redirect('gantapp:home')
+    
+    
     
     
     

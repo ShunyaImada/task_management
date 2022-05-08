@@ -25,9 +25,9 @@
 {% block content2  %}
     <h3>Taskを新規作成</h3>
     <h5>日付入力は「yyyy-mm-dd」でお願いします</h5>
-    <form action='' method ='POST'>
+    <form action='' method ='POST' autocomplete="off">
         {% csrf_token %}
-        {% bootstrap_form form layout="horizontal" %} 
+        {% bootstrap_form form  layout="horizontal"  %} 
         
         <div class="entry">
             <button type="submit" class="btn btn-primary">登録</button>

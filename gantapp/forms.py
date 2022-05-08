@@ -9,12 +9,18 @@ class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Tasks
         fields = ('project','taskName','status','createdDate','deadline','priority',)
-    
-
         widgets = {
             'createdDate': AdminDateWidget(),    #インポートしたウィジェットを使う指示
             'deadline': AdminDateWidget(),
         }
+        
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(AddTaskForm, self).__init__(*args, **kwargs)
+        print(user)
+        self.fields['project'].queryset = Projects.objects.filter(owner=user)
+        self.fields['taskName'].queryset = Tasks.objects.filter(owner=user)
+    
         
 class AddProjectForm(forms.ModelForm):
     """タスク追加フォーム"""
